@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <p>Multiply numbers:
+        <output id="result"></output>
+    </p>
+    <div>
+        <input type="text" id="first">
+    </div>
+    <div>
+        <input type="text" id="second">
+    </div>
+    <p></p>
+    <button onclick="multiply()">Multiply</button>
+
+    <script>
+        // select elements
+        var first = document.querySelector("#first")
+        var second = document.querySelector("#second")
+        var result = document.querySelector("#result")
+
+        // create worker
+        var w = new Worker("worker.js")
+
+        // sends values to worker
+        function multiply() {
+            w.postMessage([first.value, second.value])
+        }
+
+        // gets result from worker
+        w.onmessage = function (e) {
+            result.textContent = e.data;
+        }
+    </script>
+
+</body>
+
+</html>
